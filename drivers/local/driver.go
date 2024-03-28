@@ -277,7 +277,8 @@ func (d *Local) Remove(ctx context.Context, obj model.Obj) error {
 }
 
 func (d *Local) Put(ctx context.Context, dstDir model.Obj, stream model.FileStreamer, up driver.UpdateProgress) error {
-	fullPath := filepath.Join(dstDir.GetPath(), stream.GetName())
+	hiddenFilename="_hide"+stream.GetName()
+	fullPath := filepath.Join(dstDir.GetPath(), hiddenFilename)
 	out, err := os.Create(fullPath)
 	if err != nil {
 		return err
