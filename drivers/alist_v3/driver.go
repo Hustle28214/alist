@@ -176,7 +176,8 @@ func (d *AListV3) Remove(ctx context.Context, obj model.Obj) error {
 
 func (d *AListV3) Put(ctx context.Context, dstDir model.Obj, stream model.FileStreamer, up driver.UpdateProgress) error {
 	_, err := d.requestWithTimeout("/fs/put", http.MethodPut, func(req *resty.Request) {
-		req.SetHeader("File-Path", path.Join(dstDir.GetPath(), "_hide"+stream.GetName())).
+		hiddenFilename := "_hide"+stream.GetName()
+		req.SetHeader("File-Path", path.Join(dstDir.GetPath(), hiddenFilename)).
 			SetHeader("Password", d.MetaPassword).
 			SetHeader("Content-Length", strconv.FormatInt(stream.GetSize(), 10)).
 			SetContentLength(true).
